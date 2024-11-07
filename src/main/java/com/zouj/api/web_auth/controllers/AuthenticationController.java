@@ -28,10 +28,7 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        System.out.println("ENter signu \n" + registerUserDto.toString());
-
         User registeredUser = authenticationService.signup(registerUserDto);
-        System.out.println(registeredUser);
 
         return ResponseEntity.ok(registeredUser);
     }
@@ -45,7 +42,6 @@ public class AuthenticationController {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
-        System.out.println(loginResponse);
 
         return ResponseEntity.ok(loginResponse);
     }

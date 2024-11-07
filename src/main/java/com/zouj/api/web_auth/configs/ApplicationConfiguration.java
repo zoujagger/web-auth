@@ -47,12 +47,4 @@ public class ApplicationConfiguration {
 
         return authProvider;
     }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        configurer.setLocation(new FileSystemResource(".env"));
-        return configurer;
-    }
-
 }
