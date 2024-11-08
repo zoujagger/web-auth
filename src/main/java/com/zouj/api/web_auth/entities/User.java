@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
@@ -18,7 +19,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
 
 @Table(name = "users")
 @Entity
@@ -50,7 +50,8 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Role role;
 
-    public User() {}
+    public User() {
+    }
 
     public Role getRole() {
         return role;
@@ -64,7 +65,6 @@ public class User implements UserDetails {
     public Integer getId() {
         return id;
     }
-
 
     public String getFullname() {
         return fullname;
@@ -106,18 +106,16 @@ public class User implements UserDetails {
         this.updatedAt = updatedAt;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // We return an empty list because we will not cover role-based access control
-        return List.of();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString());
+        return List.of(authority);
     }
-
 
     @Override
     public String getUsername() {
         return email;
-    }  
+    }
 
     @Override
     public boolean isAccountNonExpired() {
