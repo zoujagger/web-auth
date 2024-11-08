@@ -39,16 +39,16 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
         RegisterUserDto userDto = new RegisterUserDto("superadmin42@gmail.com", "supperAdmin123pass!", "Super Admin");
 
         Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.SUPER_ADMIN);
-        Optional<User> optionalUser = userRepository.findByEmail(userDto.email());
+        Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
 
         if (optionalRole.isEmpty() || optionalUser.isPresent()) {
             return;
         }
 
         User user = new User();
-        user.setFullname(userDto.fullname());
-        user.setEmail(userDto.email());
-        user.setPassword(passwordEncoder.encode(userDto.password()));
+        user.setFullname(userDto.getFullname());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRole(optionalRole.get());
 
         userRepository.save(user);

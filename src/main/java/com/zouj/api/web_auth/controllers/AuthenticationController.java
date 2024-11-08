@@ -1,5 +1,6 @@
 package com.zouj.api.web_auth.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,8 @@ import com.zouj.api.web_auth.dtos.RegisterUserDto;
 import com.zouj.api.web_auth.entities.User;
 import com.zouj.api.web_auth.services.AuthenticationService;
 import com.zouj.api.web_auth.services.JwtService;
+
+import jakarta.validation.Valid;
 
 @RequestMapping("/auth")
 @RestController
@@ -27,10 +30,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterUserDto registerUserDto) {
+
         User registeredUser = authenticationService.signup(registerUserDto);
 
-        return ResponseEntity.ok(registeredUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
 
     @PostMapping("/login")
