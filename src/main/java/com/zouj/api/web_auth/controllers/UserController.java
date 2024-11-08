@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zouj.api.web_auth.entities.User;
 import com.zouj.api.web_auth.services.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "User", description = "Users management APIs")
 @RequestMapping("/users")
 @RestController
 public class UserController {
@@ -21,6 +26,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(security = {@SecurityRequirement(name = "bearer-key")})
     @GetMapping("/me")
     public ResponseEntity<User> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -23,6 +23,7 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private static final String[] AUTH_WHITELIST = {
+            "/auth/**",
             "/v3/api-docs*/**",
             "/swagger-ui/**"
     };
@@ -39,7 +40,7 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf
                 .disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/auth/**")
+                        .requestMatchers(AUTH_WHITELIST)
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -51,10 +52,10 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers(AUTH_WHITELIST);
-    }
+    // @Bean
+    // public WebSecurityCustomizer webSecurityCustomizer() {
+    // return web -> web.ignoring().requestMatchers(AUTH_WHITELIST);
+    // }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
