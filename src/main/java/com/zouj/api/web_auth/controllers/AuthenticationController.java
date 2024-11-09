@@ -2,6 +2,7 @@ package com.zouj.api.web_auth.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.zouj.api.web_auth.services.JwtService;
 
 import jakarta.validation.Valid;
 
+@Validated
 @RequestMapping("/auth")
 @RestController
 public class AuthenticationController {
