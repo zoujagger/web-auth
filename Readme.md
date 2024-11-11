@@ -1,8 +1,9 @@
 # User Authentication and Authorization API
 
-This project is a demonstration of how to use Spring Security  in a Spring Boot application. It utilizes various concepts like 
+This project is a demonstration of how to use Spring Security  in a Spring Boot application. It utilizes various features like 
 - Authentication with Json Web Token (`JWT`) , 
 - Authorization and Roles 
+- Confirm registration by email
 - Validation of incomming payload
 - Best practices for handling errors using a global exception handler and custom exception. 
 - Multi profiles (dev, prod)
