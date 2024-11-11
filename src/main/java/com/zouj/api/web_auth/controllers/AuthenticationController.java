@@ -3,9 +3,11 @@ package com.zouj.api.web_auth.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zouj.api.web_auth.dtos.LoginResponse;
@@ -32,11 +34,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@Valid @RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterUserDto registerUserDto) {
 
-        User registeredUser = authenticationService.signup(registerUserDto);
+        String confirmationToken = authenticationService.signup(registerUserDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(confirmationToken);
     }
 
     @PostMapping("/login")
@@ -50,6 +52,11 @@ public class AuthenticationController {
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
 
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @GetMapping("/confirmation")
+    public ResponseEntity<String> confirm(@RequestParam("token") String token) {
+        return ResponseEntity.ok(authenticationService.confirmToken(token));
     }
 
 }

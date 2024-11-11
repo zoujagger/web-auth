@@ -31,6 +31,9 @@ public class User extends BaseEntity implements UserDetails {
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Role role;
 
+    private boolean locked = true;
+    private boolean enabled = false;
+
     public User() {
     }
 
@@ -85,7 +88,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return locked;
     }
 
     @Override
@@ -95,7 +98,16 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
+    }
+
+    
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
